@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 class ParameterLogger:
-    def __init__(self, log_dir="logs"):
+    def __init__(self, log_dir="logs", inlet=None):
         # Timestamped filename prefix
         now_str = datetime.now().strftime("%Y%m%d_%H%M%S")
         self.base_filename = f"logger_{now_str}"
@@ -18,10 +18,15 @@ class ParameterLogger:
         self.log_dir = log_dir
 
         # Resolve stream
-        print("Looking for MatlabTMSiState stream...")
-        streams = resolve_streams('name', 'MatlabTMSiState')
-        self.inlet = StreamInlet(streams[0])
-        print("Connected to MatlabTMSiState")
+        if inlet is None:
+            print("Looking for MatlabTMSiState stream...")
+            streams = resolve_streams()
+            marker_streams = [s for s in streams if s.type() == "Markers"]
+            self.inlet = StreamInlet(marker_streams[0])
+            print(f"Connected to first available Markers inlet: {self.inlet.info().name()}")
+        else:
+            self.inlet = inlet
+            print(f"Using provided inlet: {self.inlet.info().name()}")
 
         # Buffers
         self.log_all = []

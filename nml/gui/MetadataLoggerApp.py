@@ -9,7 +9,7 @@ from pylsl import resolve_streams, StreamInlet
 from nml.lsl.ParameterLogger import ParameterLogger
 
 
-class LoggerApp(QWidget):
+class MetadataLoggerApp(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Parameter Logger")
@@ -20,13 +20,13 @@ class LoggerApp(QWidget):
         # UI Elements
         self.stream_select = QComboBox()
         self.stream_refresh_btn = QPushButton("Refresh Streams")
-        self.filename_input = QLineEdit("logsession")
+        self.filename_input = QLineEdit("DEFAULT")
         self.folder_btn = QPushButton("Select Log Folder")
         self.toggle_btn = QPushButton("Start Logging")
         self.status = QLabel("Idle")
         self.status.setAlignment(Qt.AlignCenter)
 
-        self.log_dir = "logs"
+        self.log_dir = r'logs\metadata'
         self.selected_stream_name = None
 
         # Layout
@@ -87,11 +87,8 @@ class LoggerApp(QWidget):
                     suffix = "log"
 
                 os.makedirs(self.log_dir, exist_ok=True)
-
-                from pylsl import StreamInlet
-                self.logger = ParameterLogger(log_dir=self.log_dir)
+                self.logger = ParameterLogger(log_dir=self.log_dir,inlet=StreamInlet(stream_info))
                 self.logger.base_filename += f"_{suffix}"
-                self.logger.inlet = StreamInlet(stream_info)
                 self.logger.start()
 
                 self.status.setText(f"Logging to: {self.logger.base_filename}")

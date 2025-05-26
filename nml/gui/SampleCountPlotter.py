@@ -1,6 +1,6 @@
 import sys
 import numpy as np
-from pylsl import StreamInlet, resolve_stream
+from pylsl import StreamInlet, resolve_streams
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot, QObject
 import pyqtgraph as pg
@@ -9,7 +9,7 @@ import time
 from nml.lsl.LSLWorker import LSLWorker
 
 
-class EMGPlotter(QObject):
+class SampleCountPlotter(QObject):
     max_samples: int = 15000
 
     def __init__(self, app, duration_secs=5):
@@ -19,9 +19,12 @@ class EMGPlotter(QObject):
 
 
         print("Looking for EMG stream...")
-        streams = resolve_stream('type', 'EMG')
+        streams = resolve_streams()
         stream_info = streams[0]
-
+        for stream in streams:
+            if stream.type() == 'EMG' and stream.name() == 'EMG Channel 0':
+                stream_info = stream
+                break
         # Print stream metadata
         print("Resolved Stream Info:")
         print(f"  Name       : {stream_info.name()}")
@@ -45,7 +48,7 @@ class EMGPlotter(QObject):
         self.plot = self.win.addPlot(title="Channel 0")
         self.curve = self.plot.plot(pen='y')
         self.plot.setLabel('left', 'Amplitude')
-        self.plot.setYRange(-5, 5)
+        # self.plot.setYRange(-5, 5)
         self.plot.setXRange(-self.duration, 0)
         self.win.show()
 
@@ -65,7 +68,7 @@ class EMGPlotter(QObject):
         if not chunk or not timestamps:
             return
 
-        samples = np.array([s[0] for s in chunk], dtype=np.float64)
+        samples = np.array([s[-1] for s in chunk], dtype=np.float64)
         t = np.array(timestamps)
 
         self.timestamps.extend(t.tolist())
@@ -92,7 +95,7 @@ class EMGPlotter(QObject):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])
-    plotter = EMGPlotter(app)
+    plotter = SampleCountPlotter(app)
     worker = LSLWorker(plotter.inlet)
     plotter.add_worker(worker)
     worker.start()
