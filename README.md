@@ -107,7 +107,7 @@ This should populate an interface which looks similar to the following:
 If you selected a different folder for your Streams or Metadata than the default locations (`logs/metadata` and `logs/streams` relative to your repository root folder), then you should update those folders to match using the buttons on the top left.  
 
 Once you select a recording, it will expand to show all the available channels to plot. With this dataset, only the `COUNTER` channel has meaningful data (the sample count that increments with time), so it's selected to illustrate the working parsing of the recorded `.bin` format:  
-![Log Viewer App with COUNTER shown](doc/Log_viewer_Loaded.png)  
+![Log Viewer App with COUNTER shown](doc/Log_Viewer_Loaded.png)  
 By clicking on the corresponding session metadata in the middle-left panel, it's possible to overlay the event timestamps of any metadata that was logged concurrently with the time-series streams, as shown:  
 ![Log Viewer App with COUNTER and overlay](doc/Log_Viewer_Loaded_Overlay.png) 
 The text next to each line indicates the raw values saved in the `Event` column associated with each timestamped line.  
