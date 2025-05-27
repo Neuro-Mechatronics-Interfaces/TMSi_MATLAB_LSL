@@ -22,7 +22,7 @@ class TimeSeriesArray(BasePlot):
 
     def rebuild_plot(self):
         if self.plot_widget:
-            self.build_plot()  # reuses the same widget
+            self._build_plot()  # reuses the same widget
 
     def _build_controls(self):
         container = QWidget()

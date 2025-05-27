@@ -5,8 +5,9 @@ Python apps/tools for interacting with MATLAB TMSi streams via LSL.
 1. [Install](#installation)
 2. [Set up Metadata Logging](#logging-parameters)
 3. [Set up Stream Logging](#logging-streams)
-4. [View Recorded Streams and Metadata](#viewing-streams-offline)
-5. [Interacting with Logs](#interacting-with-logs)
+4. [View/Interact With Streams Online](#viewing-streams-online)
+5. [View Recorded Streams and Metadata](#viewing-streams-offline)
+6. [Interacting with Logs](#interacting-with-logs)
 
 ## Installation ##
 1. Clone this repository.
@@ -99,6 +100,22 @@ Select the streams you'd like to log. The log binaries will automatically record
 As long as the streams are running and you have not clicked `Stop Logging`, samples will continue to be dumped into the generated `.bin` files, meaning they could possibly get very large if you forget and leave it running for a long time (just as a caution). If you are testing this out and have followed along with this and the [Logging Parameters](#logging-parameters) instructions, you should have binary files and csv files in a structure something like this by the time you are done:  
 ![Example file structure](doc/Logging_Files_Example.png)  
 You can use the `StreamLogReader` class (and `LogViewer` app, for convenience) to interface with these data.  
+
+## Viewing Streams Online ##
+After following the steps in [Installation](#installation), you can start viewing online streams using:
+```bat
+python stream_interactor.py
+```
+This populates a window like this one.  
+![Stream Interactor Setup](doc/Stream_Interactor_Setup.png)  
+Select the streams you'd like to view by checking the checkboxes. Once you have the streams you want, click `Connect` to connect to them. This will enable the `Start Logging` as well as the `+` button in the plots pane below. Click the `+` button to popup options for plot types. Currently, there are only `TimeSeries` and `TimeSeriesArray` plots.  
+![Stream Interactor Plot Types](doc/Stream_Interactor_Plot_Types.png)  
+Select the `TimeSeries Array` option with `SAGAB`. You may need to expand the GUI window to view the plot easily.  
+![Stream Interactor TimeSeries Array](doc/Stream_Interactor_Time_Series_Array.png)  
+You can close a given plot type by clicking the `X` to the top-right of the plot inset. You can add more plots by clicking the `+` again. Add the other TMSi grid by clicking the `+` again.  
+![Stream Interactor Double TimeSeries Array](doc/Stream_Interactor_Double_Time_Series_Array.png)  
+By convention, `SAGAA` is the distal ring - modify the titles and colormaps by changing the layout in the dropdown selection.  
+As with the `stream_logger.py`, you can generate log binaries in addition to plotting although the plotting will take a significant performance hit and the logs may have more drops due to the increased load. 
 
 ## Viewing Streams Offline ##  
 To view data from the `.bin` stream recordings as well as associated metadata, you can quickly scan individual channels from selected recordings:   

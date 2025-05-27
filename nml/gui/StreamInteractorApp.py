@@ -28,6 +28,7 @@ class StreamInteractorApp(QWidget):
 
         # --- Top: Stream Selection
         self.stream_select = QListWidget()
+        self.stream_select.setFixedHeight(150)
         self.refresh_btn = QPushButton("Refresh Streams")
         self.connect_btn = QPushButton("Connect")
         self.disconnect_btn = QPushButton("Disconnect")
