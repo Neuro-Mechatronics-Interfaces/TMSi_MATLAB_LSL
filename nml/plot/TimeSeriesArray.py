@@ -21,6 +21,8 @@ class TimeSeriesArray(BasePlot):
         super().__init__(parent=parent, logger=logger, on_close=on_close, cfg_handler=TimeSeriesArrayConfig(), buffer=np.zeros((self.n_channels, 2000)))  
 
     def rebuild_plot(self):
+        self.duration_ms = self.duration_spin.value()
+        self.v_spacing = self.spacing_spin.value()
         if self.plot_widget:
             self._build_plot()  # reuses the same widget
 

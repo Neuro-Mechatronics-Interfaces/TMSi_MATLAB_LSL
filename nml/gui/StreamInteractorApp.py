@@ -12,6 +12,7 @@ from pylsl import resolve_streams, StreamInlet
 from nml.lsl.BinaryStreamLogger import BinaryStreamLogger
 from nml.plot.TimeSeriesPlot import TimeSeriesPlot
 from nml.plot.TimeSeriesArray import TimeSeriesArray
+from nml.plot.EnvelopeGridImage import EnvelopeGridImage
 
 
 class StreamInteractorApp(QWidget):
@@ -190,7 +191,7 @@ class StreamInteractorApp(QWidget):
 
         # Plot type selection
         plot_type_box = QComboBox()
-        plot_type_box.addItems(["TimeSeries", "TimeSeries Array"])
+        plot_type_box.addItems(["TimeSeries Array", "RMS Envelope Grid", "TimeSeries"])
 
         # Logger selection
         logger_box = QComboBox()
@@ -215,6 +216,8 @@ class StreamInteractorApp(QWidget):
                 self.create_plot(TimeSeriesPlot, logger)
             elif plot_type == "TimeSeries Array" and logger:
                 self.create_plot(TimeSeriesArray, logger)
+            elif plot_type == "RMS Envelope Grid" and logger:
+                self.create_plot(EnvelopeGridImage, logger)
 
     def create_plot(self, plot_class, logger):
         self.plot_container.removeWidget(self.plus_button)
