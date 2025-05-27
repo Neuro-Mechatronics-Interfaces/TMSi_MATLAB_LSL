@@ -17,7 +17,10 @@ git clone git@github.com:Neuro-Mechatronics-Interfaces/TMSi_MATLAB_LSL.git && cd
 ```bat
 python -m venv .venv && call .venv\Scripts\activate
 ```
-Your terminal should now say `(.venv)` in front of the file path (thanks to `call .venv\Scripts\activate` - now, in this terminal, when you lead with `python` it will refer to the executable installed in `.venv\Scripts\python.exe` instead of your usual Python interpreter).  
+Your terminal should now say `(.venv)` in front of the file path (thanks to `call .venv\Scripts\activate` - now, in this terminal, when you lead with `python` it will refer to the executable installed in `.venv\Scripts\python.exe` instead of your usual Python interpreter). Note that you need to use `Python >= 3.10` to satisfy package dependencies - if you are on Windows 11 you can specify the Python version using the `py` alias:
+```bat
+py -3.12 -m venv .venv && call .venv\Scripts\activate
+```
 3. Add Python requirements to your local Python environment. 
 ```bat
 python -m pip install -r requirements.txt
